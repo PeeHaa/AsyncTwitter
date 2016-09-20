@@ -1,0 +1,32 @@
+{
+    "name": "peehaa/async-twitter",
+    "homepage": "https://github.com/peehaa/async-twitter",
+    "description": "Asynchronous parallel Twitter client built on the Amp concurrency framework",
+    "keywords": [
+        "twitter",
+        "oauth",
+        "client",
+        "parallel",
+        "async",
+        "non-blocking"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pieter Hordijk",
+            "email": "info@pieterhordijk.com",
+            "role": "Lead Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7",
+        "amphp/artax": "^2"
+    },
+    "autoload": {
+        "psr-4": {
+            "PeeHaa\\AsyncTwitter\\": "src/"
+        }
+    }
+}
