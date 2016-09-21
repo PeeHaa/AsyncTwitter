@@ -25,4 +25,3 @@ $httpClient = new Artax(new Client());
 $apiClient  = new ApiClient($httpClient, $applicationCredentials, $accessToken);
 
 \Amp\wait((new Update($apiClient, 'Test message from the new client'))->post());
-/
