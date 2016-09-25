@@ -4,4 +4,4 @@ namespace PeeHaa\AsyncTwitter\Api;
 
 use PeeHaa\AsyncTwitter\Exception;
 
-class InvalidParameterException extends Exception {}
+class InvalidMethodException extends Exception {}
