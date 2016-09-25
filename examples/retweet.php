@@ -24,4 +24,6 @@ $accessToken = new AccessToken(
 $httpClient = new Artax(new Client());
 $apiClient  = new ApiClient($httpClient, $applicationCredentials, $accessToken);
 
-\Amp\wait((new Retweet($apiClient, 757605562330836992))->post());
+$request = (new Retweet(780075575276863488))->trimUser();
+
+\Amp\wait($apiClient->request($request));

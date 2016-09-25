@@ -24,4 +24,13 @@ $accessToken = new AccessToken(
 $httpClient = new Artax(new Client());
 $apiClient  = new ApiClient($httpClient, $applicationCredentials, $accessToken);
 
-\Amp\wait((new Update($apiClient, 'Test message from the new client'))->post());
+$request = (new Update('@Ocramius I never liked that room anyway'))
+    ->replyTo(779461458715406336)
+    ->isSensitive()
+    ->setLatitude(41.721286)
+    ->setLongitude(-87.6785337)
+    ->displayCoordinates()
+    ->trimUser()
+;
+
+\Amp\wait($apiClient->request($request));

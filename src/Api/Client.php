@@ -29,11 +29,22 @@ class Client
         $this->accessToken            = $accessToken;
     }
 
-    public function post(Url $url, Body $body): Promise
+    public function request(Request $request): Promise
     {
-        $header = $this->getHeader($url, $body, 'POST');
+        switch ($request->getMethod()) {
+            case 'POST':
+                return $this->post($request);
 
-        return $this->httpClient->post($url, $header, $body);
+            default:
+                throw new InvalidMethodException();
+        }
+    }
+
+    private function post(Request $request): Promise
+    {
+        $header = $this->getHeader($request->getEndpoint(), $request->getBody(), 'POST');
+
+        return $this->httpClient->post($request->getEndpoint(), $header, $request->getBody());
     }
 
     private function getHeader(Url $url, Body $body, $method): Header

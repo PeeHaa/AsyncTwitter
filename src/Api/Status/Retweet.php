@@ -2,27 +2,50 @@
 
 namespace PeeHaa\AsyncTwitter\Api\Status;
 
-use Amp\Promise;
-use PeeHaa\AsyncTwitter\Api\Client;
+use PeeHaa\AsyncTwitter\Api\Request;
 use PeeHaa\AsyncTwitter\Request\Body;
+use PeeHaa\AsyncTwitter\Request\Parameter;
 use PeeHaa\AsyncTwitter\Request\Url;
 
-class Retweet
+class Retweet implements Request
 {
+    const METHOD   = 'POST';
     const ENDPOINT = '/statuses/retweet/%s.json';
-
-    private $client;
 
     private $id;
 
-    public function __construct(Client $client, int $id)
+    private $parameters = [];
+
+    public function __construct(int $id)
     {
-        $this->client = $client;
-        $this->id     = $id;
+        $this->id = $id;
     }
 
-    public function post(): Promise
+    public function getMethod(): string
     {
-        return $this->client->post(new Url(sprintf(self::ENDPOINT, $this->id)), new Body());
+        return self::METHOD;
+    }
+
+    public function getBody(): Body
+    {
+        $parameters = [];
+
+        foreach ($this->parameters as $key => $value) {
+            $parameters[] = new Parameter($key, $value);
+        }
+
+        return new Body(...$parameters);
+    }
+
+    public function getEndpoint(): Url
+    {
+        return new Url(sprintf(self::ENDPOINT, $this->id));
+    }
+
+    public function trimUser(): Retweet
+    {
+        $this->parameters['trim_user'] = 'true';
+
+        return $this;
     }
 }
