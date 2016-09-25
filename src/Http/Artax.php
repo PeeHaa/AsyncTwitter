@@ -20,7 +20,6 @@ class Artax
 
     public function post(Url $url, Header $header, Body $body): Promise
     {
-        var_dump($url->getUrl());
         $request = (new Request)
             ->setMethod('POST')
             ->setUri($url->getUrl())
