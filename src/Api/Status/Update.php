@@ -2,44 +2,18 @@
 
 namespace PeeHaa\AsyncTwitter\Api\Status;
 
-use PeeHaa\AsyncTwitter\Api\Request;
-use PeeHaa\AsyncTwitter\Request\Body;
-use PeeHaa\AsyncTwitter\Request\Parameter;
-use PeeHaa\AsyncTwitter\Request\Url;
+use PeeHaa\AsyncTwitter\Api\BaseRequest;
 
-class Update implements Request
+class Update extends BaseRequest
 {
     const METHOD   = 'POST';
     const ENDPOINT = '/statuses/update.json';
 
-    private $message;
-
-    private $parameters = [];
-
     public function __construct(string $message)
     {
-        $this->message = $message;
-    }
+        parent::__construct(self::METHOD, self::ENDPOINT);
 
-    public function getMethod(): string
-    {
-        return self::METHOD;
-    }
-
-    public function getBody(): Body
-    {
-        $parameters = [new Parameter('status', $this->message)];
-
-        foreach ($this->parameters as $key => $value) {
-            $parameters[] = new Parameter($key, $value);
-        }
-
-        return new Body(...$parameters);
-    }
-
-    public function getEndpoint(): Url
-    {
-        return new Url(self::ENDPOINT);
+        $this->parameters['status'] = $message;
     }
 
     public function replyTo(int $id): Update
