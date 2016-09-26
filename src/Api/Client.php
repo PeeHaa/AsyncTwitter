@@ -12,6 +12,7 @@ use PeeHaa\AsyncTwitter\Oauth\Signature\BaseString;
 use PeeHaa\AsyncTwitter\Oauth\Signature\Key;
 use PeeHaa\AsyncTwitter\Oauth\Signature\Signature;
 use PeeHaa\AsyncTwitter\Request\Body;
+use PeeHaa\AsyncTwitter\Request\Parameter;
 use PeeHaa\AsyncTwitter\Request\Url;
 
 class Client
@@ -35,6 +36,9 @@ class Client
             case 'POST':
                 return $this->post($request);
 
+            case 'GET':
+                return $this->get($request);
+
             default:
                 throw new InvalidMethodException();
         }
@@ -42,14 +46,21 @@ class Client
 
     private function post(Request $request): Promise
     {
-        $header = $this->getHeader($request->getEndpoint(), $request->getBody(), 'POST');
+        $header = $this->getHeader('POST', $request->getEndpoint(), ...$request->getParameters());
 
-        return $this->httpClient->post($request->getEndpoint(), $header, $request->getBody());
+        return $this->httpClient->post($request->getEndpoint(), $header, new Body(...$request->getParameters()));
     }
 
-    private function getHeader(Url $url, Body $body, $method): Header
+    private function get(Request $request): Promise
     {
-        $oauthParameters     = new Parameters($this->applicationCredentials, $this->accessToken, $body, $url);
+        $header = $this->getHeader('GET', $request->getEndpoint(), ...$request->getParameters());
+
+        return $this->httpClient->get($request->getEndpoint(), $header, ...$request->getParameters());
+    }
+
+    private function getHeader(string $method, Url $url, Parameter ...$parameters): Header
+    {
+        $oauthParameters     = new Parameters($this->applicationCredentials, $this->accessToken, $url, ...$parameters);
         $baseSignatureString = new BaseString($method, $url, $oauthParameters);
         $signingKey          = new Key($this->applicationCredentials, $this->accessToken);
         $signature           = new Signature($baseSignatureString, $signingKey);

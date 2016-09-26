@@ -4,7 +4,7 @@ namespace PeeHaa\AsyncTwitter\Oauth;
 
 use PeeHaa\AsyncTwitter\Credentials\Application;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
-use PeeHaa\AsyncTwitter\Request\Body;
+use PeeHaa\AsyncTwitter\Request\Parameter;
 use PeeHaa\AsyncTwitter\Request\Url;
 
 class Parameters
@@ -21,11 +21,11 @@ class Parameters
 
     private $version;
 
-    private $body;
+    private $parameters;
 
     private $url;
 
-    public function __construct(Application $consumer, AccessToken $accessToken, Body $body, Url $url)
+    public function __construct(Application $consumer, AccessToken $accessToken, Url $url, Parameter ...$parameters)
     {
         $this->consumer        = $consumer->getKey();
         $this->accessToken     = $accessToken->getToken();
@@ -33,7 +33,7 @@ class Parameters
         $this->timestamp       = (new \DateTimeImmutable())->format('U');
         $this->signatureMethod = 'HMAC-SHA1';
         $this->version         = '1.0';
-        $this->body            = $body;
+        $this->parameters      = $parameters;
         $this->url             = $url;
     }
 
@@ -69,7 +69,7 @@ class Parameters
 
     public function getAll(): array
     {
-        return array_merge($this->getBaseParameters(), $this->getQueryStringParameters(), $this->getBodyParameters());
+        return array_merge($this->getBaseParameters(), $this->getParameters());
     }
 
     private function getBaseParameters(): array
@@ -84,22 +84,11 @@ class Parameters
         ];
     }
 
-    private function getQueryStringParameters(): array
+    private function getParameters(): array
     {
         $parameters = [];
 
-        foreach ($this->url->getQueryStringParameters() as $parameter) {
-            $parameters[$parameter->getKey()] = $parameter->getValue();
-        }
-
-        return $parameters;
-    }
-
-    private function getBodyParameters(): array
-    {
-        $parameters = [];
-
-        foreach ($this->body->getParameters() as $parameter) {
+        foreach ($this->parameters as $parameter) {
             $parameters[$parameter->getKey()] = $parameter->getValue();
         }
 
