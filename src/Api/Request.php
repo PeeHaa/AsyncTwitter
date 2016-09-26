@@ -9,7 +9,7 @@ interface Request
 {
     public function getMethod(): string;
 
-    public function getBody(): Body;
+    public function getParameters(): array;
 
     public function getEndpoint(): Url;
 }
