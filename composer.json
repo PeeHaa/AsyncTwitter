@@ -1,6 +1,6 @@
 {
     "name": "peehaa/async-twitter",
-    "homepage": "https://github.com/peehaa/async-twitter",
+    "homepage": "https://github.com/peehaa/AsyncTwitter",
     "description": "Asynchronous parallel Twitter client built on the Amp concurrency framework",
     "keywords": [
         "twitter",
