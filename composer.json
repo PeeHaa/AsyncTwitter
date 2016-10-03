@@ -24,9 +24,17 @@
         "php": "^7",
         "amphp/artax": "^2"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^5"
+    },
     "autoload": {
         "psr-4": {
             "PeeHaa\\AsyncTwitter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PeeHaa\\AsyncTwitterTest\\": "tests/"
         }
     }
 }
