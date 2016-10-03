@@ -13,7 +13,7 @@ class ClientFactory
 
     public function __construct(Artax $httpClient, ApplicationCredentials $applicationCredentials)
     {
-        $this->httpClient = $httpClient;
+        $this->httpClient             = $httpClient;
         $this->applicationCredentials = $applicationCredentials;
     }
 
