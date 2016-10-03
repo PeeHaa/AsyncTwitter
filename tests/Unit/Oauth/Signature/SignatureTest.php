@@ -30,6 +30,6 @@ class SignatureTest extends TestCase
 
         $baseString = new BaseString('POST', new Url('/statuses/endpoint'), $parameters);
 
-        $this->assertRegExp('~^[^%]+%3D$~', (new Signature($baseString, $key))->getSignature());
+        $this->assertRegExp('~^.+%3D$~', (new Signature($baseString, $key))->getSignature());
     }
 }
