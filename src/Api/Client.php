@@ -48,18 +48,20 @@ class Client
         }
     }
 
-    private function getErrorStringFromResponseBody(array $body)
+    private function getErrorStringFromResponseBody(array $body): array
     {
         if (!isset($body['errors'])) {
             return ['Unknown error', -1, []];
         }
 
-        $message = (string)($body['errors'][0]['message'] ?? 'Unknown error');
-        $code = (int)($body['errors'][0]['code'] ?? -1);
-        $extra = [];
+        $firstError = array_shift($body['errors']);
 
-        for ($i = 1; isset($body['errors'][$i]); $i++) {
-            $extra[(int)($body['errors'][$i]['code'] ?? -1)] = (string)($body['errors'][$i]['message'] ?? 'Unknown error');
+        $message = $firstError['message'] ?? 'Unknown error';
+        $code    = $firstError['code'] ?? -1;
+        $extra   = [];
+
+        foreach ($body['errors'] as $error) {
+            $extra[($error['code'] ?? -1)] = ($error['message'] ?? 'Unknown error');
         }
 
         return [$message, $code, $extra];
@@ -70,21 +72,27 @@ class Client
     {
         list($message, $code, $extra) = $this->getErrorStringFromResponseBody($body);
 
-        switch ($response->getStatus()) {
-            case 400: throw new BadRequestException($message, $code, null, $extra);
-            case 401: throw new UnauthorizedException($message, $code, null, $extra);
-            case 403: throw new ForbiddenException($message, $code, null, $extra);
-            case 404: throw new NotFoundException($message, $code, null, $extra);
-            case 406: throw new NotAcceptableException($message, $code, null, $extra);
-            case 410: throw new GoneException($message, $code, null, $extra);
-            case 420: throw new RateLimitTriggeredException($message, $code, null, $extra);
-            case 422: throw new UnprocessableEntityException($message, $code, null, $extra);
-            case 429: throw new RateLimitTriggeredException($message, $code, null, $extra);
-            case 500: throw new ServerErrorException($message, $code, null, $extra);
-            case 502: throw new BadGatewayException($message, $code, null, $extra);
-            case 503: throw new ServiceUnavailableException($message, $code, null, $extra);
-            case 504: throw new GatewayTimeoutException($message, $code, null, $extra);
+        $exceptions = [
+            400 => BadRequestException::class,
+            401 => UnauthorizedException::class,
+            403 => ForbiddenException::class,
+            404 => NotFoundException::class,
+            406 => NotAcceptableException::class,
+            410 => GoneException::class,
+            420 => RateLimitTriggeredException::class,
+            422 => UnprocessableEntityException::class,
+            429 => RateLimitTriggeredException::class,
+            500 => ServerErrorException::class,
+            502 => BadGatewayException::class,
+            503 => ServiceUnavailableException::class,
+            504 => GatewayTimeoutException::class,
+        ];
+
+        if (!array_key_exists($response->getStatus(), $exceptions)) {
+            return;
         }
+
+        throw new $exceptions[$response->getStatus()]($message, $code, null, $extra);
     }
 
     private function handleResponse(Promise $responsePromise): Promise
@@ -107,17 +115,17 @@ class Client
 
     private function post(Request $request): Promise
     {
-        $header = $this->getHeader('POST', $request->getEndpoint(), ...$request->getParameters());
-
+        $header   = $this->getHeader('POST', $request->getEndpoint(), ...$request->getParameters());
         $response = $this->httpClient->post($request->getEndpoint(), $header, new Body(...$request->getParameters()));
+
         return $this->handleResponse($response);
     }
 
     private function get(Request $request): Promise
     {
-        $header = $this->getHeader('GET', $request->getEndpoint(), ...$request->getParameters());
-
+        $header   = $this->getHeader('GET', $request->getEndpoint(), ...$request->getParameters());
         $response = $this->httpClient->get($request->getEndpoint(), $header, ...$request->getParameters());
+
         return $this->handleResponse($response);
     }
 
