@@ -7,7 +7,7 @@ use Amp\Promise;
 use ExceptionalJSON\DecodeErrorException as JSONDecodeErrorException;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
-use PeeHaa\AsyncTwitter\Http\Artax;
+use PeeHaa\AsyncTwitter\Http\Client as HttpClient;
 use PeeHaa\AsyncTwitter\Oauth\Header;
 use PeeHaa\AsyncTwitter\Oauth\Parameters;
 use PeeHaa\AsyncTwitter\Oauth\Signature\BaseString;
@@ -27,7 +27,7 @@ class Client
 
     private $accessToken;
 
-    public function __construct(Artax $httpClient, Application $applicationCredentials, AccessToken $accessToken)
+    public function __construct(HttpClient $httpClient, Application $applicationCredentials, AccessToken $accessToken)
     {
         $this->httpClient             = $httpClient;
         $this->applicationCredentials = $applicationCredentials;
