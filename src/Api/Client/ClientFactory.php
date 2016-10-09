@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Api;
+namespace PeeHaa\AsyncTwitter\Api\Client;
 
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application as ApplicationCredentials;

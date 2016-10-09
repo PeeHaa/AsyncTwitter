@@ -7,7 +7,7 @@ use PeeHaa\AsyncTwitter\Api\Request\Status\HomeTimeline;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
 use PeeHaa\AsyncTwitter\Http\Artax;
-use PeeHaa\AsyncTwitter\Api\Client as ApiClient;
+use PeeHaa\AsyncTwitter\Api\Client\Client as ApiClient;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

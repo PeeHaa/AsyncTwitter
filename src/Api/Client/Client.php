@@ -1,10 +1,24 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Api;
+namespace PeeHaa\AsyncTwitter\Api\Client;
 
 use Amp\Artax\Response as HttpResponse;
 use Amp\Promise;
 use ExceptionalJSON\DecodeErrorException as JSONDecodeErrorException;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\BadGateway;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\BadRequest;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\Forbidden;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\GatewayTimeout;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\Gone;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\InvalidMethod;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\NotAcceptable;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\NotFound;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\RateLimitTriggered;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\RequestFailed;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\ServerError;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\ServiceUnavailable;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\Unauthorized;
+use PeeHaa\AsyncTwitter\Api\Client\Exception\UnprocessableEntity;
 use PeeHaa\AsyncTwitter\Api\Request\Request;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
@@ -45,7 +59,7 @@ class Client
                 return $this->get($request);
 
             default:
-                throw new InvalidMethodException();
+                throw new InvalidMethod();
         }
     }
 
@@ -74,19 +88,19 @@ class Client
         list($message, $code, $extra) = $this->getErrorStringFromResponseBody($body);
 
         $exceptions = [
-            400 => BadRequestException::class,
-            401 => UnauthorizedException::class,
-            403 => ForbiddenException::class,
-            404 => NotFoundException::class,
-            406 => NotAcceptableException::class,
-            410 => GoneException::class,
-            420 => RateLimitTriggeredException::class,
-            422 => UnprocessableEntityException::class,
-            429 => RateLimitTriggeredException::class,
-            500 => ServerErrorException::class,
-            502 => BadGatewayException::class,
-            503 => ServiceUnavailableException::class,
-            504 => GatewayTimeoutException::class,
+            400 => BadRequest::class,
+            401 => Unauthorized::class,
+            403 => Forbidden::class,
+            404 => NotFound::class,
+            406 => NotAcceptable::class,
+            410 => Gone::class,
+            420 => RateLimitTriggered::class,
+            422 => UnprocessableEntity::class,
+            429 => RateLimitTriggered::class,
+            500 => ServerError::class,
+            502 => BadGateway::class,
+            503 => ServiceUnavailable::class,
+            504 => GatewayTimeout::class,
         ];
 
         if (!array_key_exists($response->getStatus(), $exceptions)) {
@@ -105,7 +119,7 @@ class Client
             try {
                 $decoded = json_try_decode($response->getBody(), true);
             } catch (JSONDecodeErrorException $e) {
-                throw new RequestFailedException('Failed to decode response body as JSON', $e->getCode(), $e);
+                throw new RequestFailed('Failed to decode response body as JSON', $e->getCode(), $e);
             }
 
             $this->throwFromErrorResponse($response, $decoded);
