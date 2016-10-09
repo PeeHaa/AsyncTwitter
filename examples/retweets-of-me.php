@@ -3,7 +3,7 @@
 namespace PeeHaa\AsyncTwitter\Examples;
 
 use Amp\Artax\Client;
-use PeeHaa\AsyncTwitter\Api\Status\RetweetsOfMe;
+use PeeHaa\AsyncTwitter\Api\Request\Status\RetweetsOfMe;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
 use PeeHaa\AsyncTwitter\Http\Artax;
