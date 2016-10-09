@@ -5,6 +5,7 @@ namespace PeeHaa\AsyncTwitter\Api;
 use Amp\Artax\Response as HttpResponse;
 use Amp\Promise;
 use ExceptionalJSON\DecodeErrorException as JSONDecodeErrorException;
+use PeeHaa\AsyncTwitter\Api\Request\Request;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
 use PeeHaa\AsyncTwitter\Http\Client as HttpClient;
