@@ -22,6 +22,7 @@ use PeeHaa\AsyncTwitter\Api\Client\Exception\UnprocessableEntity;
 use PeeHaa\AsyncTwitter\Api\Request\Request;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
+use PeeHaa\AsyncTwitter\Exception;
 use PeeHaa\AsyncTwitter\Http\Client as HttpClient;
 use PeeHaa\AsyncTwitter\Oauth\Header;
 use PeeHaa\AsyncTwitter\Oauth\Parameters;
