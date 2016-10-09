@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace PeeHaa\AsyncTwitter\Api;
+namespace PeeHaa\AsyncTwitter\Api\Client\Exception;
 
 use PeeHaa\AsyncTwitter\Exception;
 
-class RequestFailedException extends Exception
+class RequestFailed extends Exception
 {
     private $extraErrorInfo;
 
