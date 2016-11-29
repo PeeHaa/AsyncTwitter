@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Api;
+namespace PeeHaa\AsyncTwitter\Api\Request;
 
-use PeeHaa\AsyncTwitter\Request\Body;
 use PeeHaa\AsyncTwitter\Request\Url;
 
 interface Request

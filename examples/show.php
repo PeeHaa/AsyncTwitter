@@ -3,7 +3,7 @@
 namespace PeeHaa\AsyncTwitter\Examples;
 
 use Amp\Artax\Client;
-use PeeHaa\AsyncTwitter\Api\Request\Status\Retweets;
+use PeeHaa\AsyncTwitter\Api\Request\Status\Show;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
 use PeeHaa\AsyncTwitter\Http\Artax;
@@ -24,9 +24,10 @@ $accessToken = new AccessToken(
 $httpClient = new Artax(new Client());
 $apiClient  = new ApiClient($httpClient, $applicationCredentials, $accessToken);
 
-$request = (new Retweets(773866378172440576))
-    ->amount(10)
+$request = (new Show(210462857140252672))
     ->trimUser()
+    ->excludeEntities()
+    ->includeUserRetweetStatus()
 ;
 
-\Amp\wait($result = $apiClient->request($request));
+\Amp\wait($apiClient->request($request));

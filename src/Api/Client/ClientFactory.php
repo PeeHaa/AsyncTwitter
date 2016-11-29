@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Api;
+namespace PeeHaa\AsyncTwitter\Api\Client;
 
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application as ApplicationCredentials;
-use PeeHaa\AsyncTwitter\Http\Artax;
+use PeeHaa\AsyncTwitter\Http\Client as HttpClient;
 
 class ClientFactory
 {
     private $httpClient;
     private $applicationCredentials;
 
-    public function __construct(Artax $httpClient, ApplicationCredentials $applicationCredentials)
+    public function __construct(HttpClient $httpClient, ApplicationCredentials $applicationCredentials)
     {
         $this->httpClient             = $httpClient;
         $this->applicationCredentials = $applicationCredentials;

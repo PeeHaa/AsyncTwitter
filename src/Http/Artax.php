@@ -2,7 +2,7 @@
 
 namespace PeeHaa\AsyncTwitter\Http;
 
-use Amp\Artax\Client;
+use Amp\Artax\Client as ArtaxClient;
 use Amp\Promise;
 use PeeHaa\AsyncTwitter\Request\Body;
 use PeeHaa\AsyncTwitter\Request\Parameter;
@@ -10,11 +10,11 @@ use PeeHaa\AsyncTwitter\Request\Url;
 use PeeHaa\AsyncTwitter\Oauth\Header;
 use Amp\Artax\Request;
 
-class Artax
+class Artax implements Client
 {
     private $client;
 
-    public function __construct(Client $client)
+    public function __construct(ArtaxClient $client)
     {
         $this->client = $client;
     }

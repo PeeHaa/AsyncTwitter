@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Api\Status;
+namespace PeeHaa\AsyncTwitter\Api\Request\Status;
 
-use PeeHaa\AsyncTwitter\Api\BaseRequest;
+use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
 class Update extends BaseRequest
 {
