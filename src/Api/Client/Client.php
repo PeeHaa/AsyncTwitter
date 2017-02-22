@@ -20,9 +20,9 @@ use PeeHaa\AsyncTwitter\Api\Client\Exception\ServiceUnavailable;
 use PeeHaa\AsyncTwitter\Api\Client\Exception\Unauthorized;
 use PeeHaa\AsyncTwitter\Api\Client\Exception\UnprocessableEntity;
 use PeeHaa\AsyncTwitter\Api\Request\Request;
+use PeeHaa\AsyncTwitter\Api\Request\Stream\Request as StreamRequest;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
-use PeeHaa\AsyncTwitter\Exception;
 use PeeHaa\AsyncTwitter\Http\Client as HttpClient;
 use PeeHaa\AsyncTwitter\Oauth\Header;
 use PeeHaa\AsyncTwitter\Oauth\Parameters;
@@ -52,6 +52,13 @@ class Client
 
     public function request(Request $request): Promise
     {
+        return $request instanceof StreamRequest
+            ? $this->openStream($request)
+            : $this->handleResponse($this->sendRequest($request));
+    }
+
+    private function sendRequest(Request $request)
+    {
         switch ($request->getMethod()) {
             case 'POST':
                 return $this->post($request);
@@ -62,6 +69,15 @@ class Client
             default:
                 throw new InvalidMethod();
         }
+    }
+
+    private function openStream(StreamRequest $request): Promise
+    {
+        $watcher = new StreamReader;
+
+        $this->sendRequest($request)->watch([$watcher, 'onProgress']);
+
+        return $watcher->awaitStreamOpen();
     }
 
     private function getErrorStringFromResponseBody(array $body): array
@@ -131,18 +147,26 @@ class Client
 
     private function post(Request $request): Promise
     {
-        $header   = $this->getHeader('POST', $request->getEndpoint(), ...$request->getParameters());
-        $response = $this->httpClient->post($request->getEndpoint(), $header, new Body(...$request->getParameters()));
+        $header = $this->getHeader('POST', $request->getEndpoint(), ...$request->getParameters());
 
-        return $this->handleResponse($response);
+        $flags = 0;
+        if ($request instanceof StreamRequest) {
+            $flags |= HttpClient::OP_STREAM;
+        }
+
+        return $this->httpClient->post($request->getEndpoint(), $header, new Body(...$request->getParameters()), $flags);
     }
 
     private function get(Request $request): Promise
     {
-        $header   = $this->getHeader('GET', $request->getEndpoint(), ...$request->getParameters());
-        $response = $this->httpClient->get($request->getEndpoint(), $header, ...$request->getParameters());
+        $header = $this->getHeader('GET', $request->getEndpoint(), ...$request->getParameters());
 
-        return $this->handleResponse($response);
+        $flags = 0;
+        if ($request instanceof StreamRequest) {
+            $flags |= HttpClient::OP_STREAM;
+        }
+
+        return $this->httpClient->get($request->getEndpoint(), $header, $request->getParameters(), $flags);
     }
 
     private function getHeader(string $method, Url $url, Parameter ...$parameters): Header

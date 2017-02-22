@@ -19,7 +19,7 @@ class SignatureTest extends TestCase
         $parameters = new Parameters(
             new Application('ApplicationKey', 'ApplicationSecret'),
             new AccessToken('AccessToken', 'AccessSecret'),
-            new Url('/statuses/endpoint'),
+            new Url('https://api.twitter.com/1.1', '/statuses/endpoint'),
             ...[new Parameter('key1', 'value1')]
         );
 
@@ -28,7 +28,7 @@ class SignatureTest extends TestCase
             new AccessToken('AccessToken', 'AccessSecret')
         );
 
-        $baseString = new BaseString('POST', new Url('/statuses/endpoint'), $parameters);
+        $baseString = new BaseString('POST', new Url('https://api.twitter.com/1.1', '/statuses/endpoint'), $parameters);
 
         $this->assertRegExp('~^.+%3D$~', (new Signature($baseString, $key))->getSignature());
     }

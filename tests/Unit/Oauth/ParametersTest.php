@@ -23,7 +23,7 @@ class ParametersTest extends TestCase
         return new Parameters(
             new Application('ApplicationKey', 'ApplicationSecret'),
             new AccessToken('AccessToken', 'AccessSecret'),
-            new Url('/statuses/endpoint'),
+            new Url('https://api.twitter.com/1.1', '/statuses/endpoint'),
             ...[new Parameter('key1', 'value1')]
         );
     }

@@ -6,6 +6,7 @@ use Amp\Artax\Client;
 use Amp\Success;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
+use PeeHaa\AsyncTwitter\Http\Client as AsyncTwitterHttpClient;
 use PeeHaa\AsyncTwitter\Http\Artax;
 use PeeHaa\AsyncTwitter\Oauth\Parameters;
 use PeeHaa\AsyncTwitter\Oauth\Signature\BaseString;
@@ -31,17 +32,17 @@ class ArtaxTest extends TestCase
     public function setUp()
     {
         $this->clientMock = $this->createMock(Client::class);
-        $this->url        = new Url('/statuses/endpoint');
+        $this->url        = new Url('https://api.twitter.com/1.1', '/statuses/endpoint');
 
         $oAuthParameters = new Parameters(
             new Application('ApplicationKey', 'ApplicationSecret'),
             new AccessToken('AccessToken', 'AccessSecret'),
-            new Url('/statuses/endpoint'),
+            new Url('https://api.twitter.com/1.1', '/statuses/endpoint'),
             ...[new Parameter('key1', 'value1')]
         );
 
         $signature = new Signature(
-            new BaseString('POST', new Url('/statuses/endpoint'), $oAuthParameters),
+            new BaseString('POST', new Url('https://api.twitter.com/1.1', '/statuses/endpoint'), $oAuthParameters),
             new Key(new Application('ApplicationKey', 'ApplicationSecret'), new AccessToken('AccessToken', 'AccessSecret'))
         );
 
@@ -77,6 +78,21 @@ class ArtaxTest extends TestCase
         (new Artax($this->clientMock))->post($this->url, $this->header, $body);
     }
 
+    public function testPostStreamFlagSetsTimeout()
+    {
+        $this->clientMock
+            ->expects($this->once())
+            ->method('request')
+            // todo: test that the timeout value is negative, can't find a sane way to do this at the moment
+            ->with($this->isInstanceOf(Request::class), $this->arrayHasKey(Client::OP_MS_TRANSFER_TIMEOUT))
+            ->will($this->returnValue(new Success))
+        ;
+
+        $body = new Body(...$this->parameters);
+
+        (new Artax($this->clientMock))->post($this->url, $this->header, $body, AsyncTwitterHttpClient::OP_STREAM);
+    }
+
     public function testGet()
     {
         $this->clientMock
@@ -95,6 +111,19 @@ class ArtaxTest extends TestCase
             }))
         ;
 
-        (new Artax($this->clientMock))->get($this->url, $this->header, ...$this->parameters);
+        (new Artax($this->clientMock))->get($this->url, $this->header, $this->parameters);
+    }
+
+    public function testGetStreamFlagSetsTimeout()
+    {
+        $this->clientMock
+            ->expects($this->once())
+            ->method('request')
+            // todo: test that the timeout value is negative, can't find a sane way to do this at the moment
+            ->with($this->isInstanceOf(Request::class), $this->arrayHasKey(Client::OP_MS_TRANSFER_TIMEOUT))
+            ->will($this->returnValue(new Success))
+        ;
+
+        (new Artax($this->clientMock))->get($this->url, $this->header, $this->parameters, AsyncTwitterHttpClient::OP_STREAM);
     }
 }

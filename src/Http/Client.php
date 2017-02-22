@@ -10,7 +10,16 @@ use PeeHaa\AsyncTwitter\Oauth\Header;
 
 interface Client
 {
-    public function post(Url $url, Header $header, Body $body): Promise;
+    const OP_STREAM = 1;
 
-    public function get(Url $url, Header $header, Parameter ...$parameters): Promise;
+    public function post(Url $url, Header $header, Body $body, int $flags = 0): Promise;
+
+    /**
+     * @param Url $url
+     * @param Header $header
+     * @param Parameter[] $parameters
+     * @param int $flags
+     * @return Promise
+     */
+    public function get(Url $url, Header $header, array $parameters, int $flags = 0): Promise;
 }

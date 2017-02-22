@@ -7,6 +7,8 @@ use PeeHaa\AsyncTwitter\Request\Url;
 
 abstract class BaseRequest implements Request
 {
+    const BASE_URL = 'https://api.twitter.com/1.1';
+
     private $method;
 
     private $endpoint;
@@ -37,6 +39,6 @@ abstract class BaseRequest implements Request
 
     public function getEndpoint(): Url
     {
-        return new Url($this->endpoint);
+        return new Url(static::BASE_URL, $this->endpoint);
     }
 }
