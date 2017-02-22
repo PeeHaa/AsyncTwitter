@@ -4,21 +4,22 @@ namespace PeeHaa\AsyncTwitter\Request;
 
 class Url
 {
-    const BASE_URL = 'https://api.twitter.com/1.1';
+    private $url;
 
     private $path;
 
     private $parameters = [];
 
-    public function __construct(string $path, Parameter ...$parameters)
+    public function __construct(string $url, string $path, Parameter ...$parameters)
     {
+        $this->url        = $url;
         $this->path       = $path;
         $this->parameters = $parameters;
     }
 
     public function getBaseString(): string
     {
-        return self::BASE_URL . $this->path;
+        return $this->url . $this->path;
     }
 
     public function getQueryStringParameters(): array
@@ -28,7 +29,7 @@ class Url
 
     public function getUrl(): string
     {
-        $url = self::BASE_URL . $this->path;
+        $url = $this->url . $this->path;
 
         if ($this->parameters) {
             $url .= $this->buildQueryString();

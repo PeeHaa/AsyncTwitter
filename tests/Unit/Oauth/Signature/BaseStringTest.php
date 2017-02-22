@@ -19,11 +19,11 @@ class BaseStringTest extends TestCase
         $parameters = new Parameters(
             new Application('ApplicationKey', 'ApplicationSecret'),
             new AccessToken('AccessToken', 'AccessSecret'),
-            new Url('/statuses/endpoint'),
+            new Url('https://api.twitter.com/1.1', '/statuses/endpoint'),
             ...[new Parameter('key1', 'value1')]
         );
 
-        $this->baseString = new BaseString('POST', new Url('/statuses/endpoint'), $parameters);
+        $this->baseString = new BaseString('POST', new Url('https://api.twitter.com/1.1', '/statuses/endpoint'), $parameters);
     }
 
     public function testGetString()

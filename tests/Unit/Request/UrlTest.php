@@ -18,7 +18,7 @@ class UrlTest extends TestCase
             new Parameter('key3', 'value3'),
         ];
 
-        $this->url  = new Url('/statuses/endpoint', ...$parameters);
+        $this->url  = new Url('https://api.twitter.com/1.1', '/statuses/endpoint', ...$parameters);
     }
 
     public function testGetBaseString()
@@ -33,7 +33,7 @@ class UrlTest extends TestCase
 
     public function testGetUrlWithoutQueryString()
     {
-        $url = new Url('/statuses/endpoint');
+        $url = new Url('https://api.twitter.com/1.1', '/statuses/endpoint');
 
         $this->assertSame('https://api.twitter.com/1.1/statuses/endpoint', $url->getUrl());
     }

@@ -81,7 +81,7 @@ class ClientTest extends TestCase
         $this->requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $this->requestMock
@@ -441,7 +441,7 @@ class ClientTest extends TestCase
         $requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $requestMock
@@ -496,7 +496,7 @@ class ClientTest extends TestCase
         $requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $requestMock
@@ -551,7 +551,7 @@ class ClientTest extends TestCase
         $requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $requestMock

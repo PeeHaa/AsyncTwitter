@@ -19,7 +19,7 @@ class Artax implements Client
         $this->client = $client;
     }
 
-    public function post(Url $url, Header $header, Body $body): Promise
+    public function post(Url $url, Header $header, Body $body, int $flags = 0): Promise
     {
         $request = (new Request)
             ->setMethod('POST')
@@ -31,7 +31,12 @@ class Artax implements Client
             ->setBody($this->getBodyString($body))
         ;
 
-        return $this->client->request($request);
+        $options = [];
+        if ($flags & Client::OP_STREAM) {
+            $options[ArtaxClient::OP_MS_TRANSFER_TIMEOUT] = -1;
+        }
+
+        return $this->client->request($request, $options);
     }
 
     private function getBodyString(Body $body): string
@@ -48,7 +53,7 @@ class Artax implements Client
         return $bodyString;
     }
 
-    public function get(Url $url, Header $header, Parameter ...$parameters): Promise
+    public function get(Url $url, Header $header, array $parameters, int $flags = 0): Promise
     {
         $request = (new Request)
             ->setMethod('GET')
@@ -56,7 +61,12 @@ class Artax implements Client
             ->setAllHeaders(['Authorization' => $header->getHeader()])
         ;
 
-        return $this->client->request($request);
+        $options = [];
+        if ($flags & Client::OP_STREAM) {
+            $options[ArtaxClient::OP_MS_TRANSFER_TIMEOUT] = -1;
+        }
+
+        return $this->client->request($request, $options);
     }
 
     private function buildQueryString(Parameter ...$parameters): string
