@@ -11,4 +11,6 @@ interface Request
     public function getParameters(): array;
 
     public function getEndpoint(): Url;
+
+    public function handleResponse(array $responseData);
 }

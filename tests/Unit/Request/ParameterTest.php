@@ -2,7 +2,7 @@
 
 namespace PeeHaa\AsyncTwitterTest\Request;
 
-use PeeHaa\AsyncTwitter\Request\Parameter;
+use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PHPUnit\Framework\TestCase;
 
 class ParameterTest extends TestCase
@@ -11,7 +11,7 @@ class ParameterTest extends TestCase
 
     public function setUp()
     {
-        $this->parameter = new Parameter('TheKey', 'TheValue');
+        $this->parameter = new FieldParameter('TheKey', 'TheValue');
     }
 
     public function testGetKey()
