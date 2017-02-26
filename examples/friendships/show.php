@@ -21,3 +21,4 @@ $request = (new Show())
 ;
 
 \Amp\wait($result = $apiClient->request($request));
+
