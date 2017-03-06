@@ -6,7 +6,7 @@ use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
 use PeeHaa\AsyncTwitter\Oauth\Parameters;
 use PeeHaa\AsyncTwitter\Oauth\Signature\BaseString;
-use PeeHaa\AsyncTwitter\Request\Parameter;
+use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PeeHaa\AsyncTwitter\Request\Url;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +20,7 @@ class BaseStringTest extends TestCase
             new Application('ApplicationKey', 'ApplicationSecret'),
             new AccessToken('AccessToken', 'AccessSecret'),
             new Url('https://api.twitter.com/1.1', '/statuses/endpoint'),
-            ...[new Parameter('key1', 'value1')]
+            ...[new FieldParameter('key1', 'value1')]
         );
 
         $this->baseString = new BaseString('POST', new Url('https://api.twitter.com/1.1', '/statuses/endpoint'), $parameters);

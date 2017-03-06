@@ -30,6 +30,7 @@ use PeeHaa\AsyncTwitter\Oauth\Signature\BaseString;
 use PeeHaa\AsyncTwitter\Oauth\Signature\Key;
 use PeeHaa\AsyncTwitter\Oauth\Signature\Signature;
 use PeeHaa\AsyncTwitter\Request\Body;
+use PeeHaa\AsyncTwitter\Request\FileParameter;
 use PeeHaa\AsyncTwitter\Request\Parameter;
 use PeeHaa\AsyncTwitter\Request\Url;
 use function Amp\resolve;
@@ -54,21 +55,25 @@ class Client
     {
         return $request instanceof StreamRequest
             ? $this->openStream($request)
-            : $this->handleResponse($this->sendRequest($request));
+            : $this->sendRequest($request);
     }
 
     private function sendRequest(Request $request)
     {
         switch ($request->getMethod()) {
             case 'POST':
-                return $this->post($request);
+                $responsePromise = $this->post($request);
+                break;
 
             case 'GET':
-                return $this->get($request);
+                $responsePromise = $this->get($request);
+                break;
 
             default:
                 throw new InvalidMethod();
         }
+
+        return resolve($this->handleResponse($request, $responsePromise));
     }
 
     private function openStream(StreamRequest $request): Promise
@@ -127,22 +132,20 @@ class Client
         throw new $exceptions[$response->getStatus()]($message, $code, null, $extra);
     }
 
-    private function handleResponse(Promise $responsePromise): Promise
+    private function handleResponse(Request $request, Promise $responsePromise)
     {
-        return resolve(function() use($responsePromise) {
-            /** @var HttpResponse $response */
-            $response = yield $responsePromise;
+        /** @var HttpResponse $response */
+        $response = yield $responsePromise;
 
-            try {
-                $decoded = json_try_decode($response->getBody(), true);
-            } catch (JSONDecodeErrorException $e) {
-                throw new RequestFailed('Failed to decode response body as JSON', $e->getCode(), $e);
-            }
+        try {
+            $decoded = json_try_decode($response->getBody(), true);
+        } catch (JSONDecodeErrorException $e) {
+            throw new RequestFailed('Failed to decode response body as JSON', $e->getCode(), $e);
+        }
 
-            $this->throwFromErrorResponse($response, $decoded);
+        $this->throwFromErrorResponse($response, $decoded);
 
-            return $decoded;
-        });
+        return $request->handleResponse($decoded);
     }
 
     private function post(Request $request): Promise
@@ -171,7 +174,18 @@ class Client
 
     private function getHeader(string $method, Url $url, Parameter ...$parameters): Header
     {
-        $oauthParameters     = new Parameters($this->applicationCredentials, $this->accessToken, $url, ...$parameters);
+        $params = [];
+
+        foreach ($parameters as $parameter) {
+            if ($parameter instanceof FileParameter) {
+                $params = [];
+                break;
+            }
+
+            $params[] = $parameter;
+        }
+
+        $oauthParameters     = new Parameters($this->applicationCredentials, $this->accessToken, $url, ...$params);
         $baseSignatureString = new BaseString($method, $url, $oauthParameters);
         $signingKey          = new Key($this->applicationCredentials, $this->accessToken);
         $signature           = new Signature($baseSignatureString, $signingKey);

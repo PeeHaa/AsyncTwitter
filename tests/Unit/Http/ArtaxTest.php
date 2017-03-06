@@ -3,20 +3,20 @@
 namespace PeeHaa\AsyncTwitterTest\Http;
 
 use Amp\Artax\Client;
+use Amp\Artax\Request;
 use Amp\Success;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
-use PeeHaa\AsyncTwitter\Http\Client as AsyncTwitterHttpClient;
 use PeeHaa\AsyncTwitter\Http\Artax;
+use PeeHaa\AsyncTwitter\Http\Client as AsyncTwitterHttpClient;
+use PeeHaa\AsyncTwitter\Oauth\Header;
 use PeeHaa\AsyncTwitter\Oauth\Parameters;
 use PeeHaa\AsyncTwitter\Oauth\Signature\BaseString;
 use PeeHaa\AsyncTwitter\Oauth\Signature\Key;
 use PeeHaa\AsyncTwitter\Oauth\Signature\Signature;
 use PeeHaa\AsyncTwitter\Request\Body;
-use PeeHaa\AsyncTwitter\Request\Parameter;
+use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PeeHaa\AsyncTwitter\Request\Url;
-use PeeHaa\AsyncTwitter\Oauth\Header;
-use Amp\Artax\Request;
 use PHPUnit\Framework\TestCase;
 
 class ArtaxTest extends TestCase
@@ -38,7 +38,7 @@ class ArtaxTest extends TestCase
             new Application('ApplicationKey', 'ApplicationSecret'),
             new AccessToken('AccessToken', 'AccessSecret'),
             new Url('https://api.twitter.com/1.1', '/statuses/endpoint'),
-            ...[new Parameter('key1', 'value1')]
+            ...[new FieldParameter('key1', 'value1')]
         );
 
         $signature = new Signature(
@@ -49,9 +49,9 @@ class ArtaxTest extends TestCase
         $this->header = new Header($oAuthParameters, $signature);
 
         $this->parameters = [
-            new Parameter('param1', 'value1'),
-            new Parameter('param2', 'value2'),
-            new Parameter('param3', 'value3'),
+            new FieldParameter('param1', 'value1'),
+            new FieldParameter('param2', 'value2'),
+            new FieldParameter('param3', 'value3'),
         ];
     }
 
