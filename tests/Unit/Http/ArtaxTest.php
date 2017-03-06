@@ -65,9 +65,6 @@ class ArtaxTest extends TestCase
                 $this->assertSame('POST', $request->getMethod());
                 $this->assertSame('https://api.twitter.com/1.1/statuses/endpoint', $request->getUri());
                 $this->assertArrayHasKey('Authorization', $request->getAllHeaders());
-                $this->assertArrayHasKey('Content-Type', $request->getAllHeaders());
-                $this->assertSame('application/x-www-form-urlencoded', $request->getAllHeaders()['Content-Type'][0]);
-                $this->assertSame('param1=value1&param2=value2&param3=value3', $request->getBody());
 
                 return new Success();
             }))
