@@ -2,16 +2,16 @@
 
 namespace PeeHaa\AsyncTwitter\Request;
 
-class Parameter
+abstract class Parameter
 {
     private $key;
 
-    private $value;
+    private $type;
 
-    public function __construct(string $key, string $value)
+    public function __construct(string $key, string $type = 'text/plain')
     {
         $this->key   = $key;
-        $this->value = $value;
+        $this->type = $type;
     }
 
     public function getKey(): string
@@ -19,8 +19,8 @@ class Parameter
         return $this->key;
     }
 
-    public function getValue(): string
+    public function getType(): string
     {
-        return $this->value;
+        return $this->type;
     }
 }

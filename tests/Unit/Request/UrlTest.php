@@ -2,7 +2,7 @@
 
 namespace PeeHaa\AsyncTwitterTest\Request;
 
-use PeeHaa\AsyncTwitter\Request\Parameter;
+use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PeeHaa\AsyncTwitter\Request\Url;
 use PHPUnit\Framework\TestCase;
 
@@ -13,12 +13,12 @@ class UrlTest extends TestCase
     public function setUp()
     {
         $parameters = [
-            new Parameter('key1', 'value1'),
-            new Parameter('key2', 'value2'),
-            new Parameter('key3', 'value3'),
+            new FieldParameter('key1', 'value1'),
+            new FieldParameter('key2', 'value2'),
+            new FieldParameter('key3', 'value3'),
         ];
 
-        $this->url  = new Url('/statuses/endpoint', ...$parameters);
+        $this->url  = new Url('https://api.twitter.com/1.1', '/statuses/endpoint', ...$parameters);
     }
 
     public function testGetBaseString()
@@ -33,7 +33,7 @@ class UrlTest extends TestCase
 
     public function testGetUrlWithoutQueryString()
     {
-        $url = new Url('/statuses/endpoint');
+        $url = new Url('https://api.twitter.com/1.1', '/statuses/endpoint');
 
         $this->assertSame('https://api.twitter.com/1.1/statuses/endpoint', $url->getUrl());
     }

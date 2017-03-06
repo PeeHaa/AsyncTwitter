@@ -2,11 +2,9 @@
 
 namespace PeeHaa\AsyncTwitter\Api\Client;
 
-use Amp\Artax\Response as HttpResponse;
 use Amp\Artax\Response;
 use Amp\Promise;
 use Amp\Success;
-use ExceptionalJSON\DecodeErrorException as JSONDecodeErrorException;
 use PeeHaa\AsyncTwitter\Api\Client\Exception\BadGateway;
 use PeeHaa\AsyncTwitter\Api\Client\Exception\BadRequest;
 use PeeHaa\AsyncTwitter\Api\Client\Exception\Forbidden;
@@ -25,17 +23,10 @@ use PeeHaa\AsyncTwitter\Api\Request\Request;
 use PeeHaa\AsyncTwitter\Credentials\AccessToken;
 use PeeHaa\AsyncTwitter\Credentials\Application;
 use PeeHaa\AsyncTwitter\Http\Client as HttpClient;
-use PeeHaa\AsyncTwitter\Oauth\Header;
-use PeeHaa\AsyncTwitter\Oauth\Parameters;
-use PeeHaa\AsyncTwitter\Oauth\Signature\BaseString;
-use PeeHaa\AsyncTwitter\Oauth\Signature\Key;
-use PeeHaa\AsyncTwitter\Oauth\Signature\Signature;
-use PeeHaa\AsyncTwitter\Request\Body;
-use PeeHaa\AsyncTwitter\Request\Parameter;
+use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PeeHaa\AsyncTwitter\Request\Url;
-use function Amp\resolve;
-use function ExceptionalJSON\decode as json_try_decode;
 use PHPUnit\Framework\TestCase;
+use function ExceptionalJSON\decode as json_try_decode;
 
 class ClientTest extends TestCase
 {
@@ -81,13 +72,13 @@ class ClientTest extends TestCase
         $this->requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $this->requestMock
             ->expects($this->exactly(2))
             ->method('getParameters')
-            ->will($this->returnValue([new Parameter('key1', 'value1')]))
+            ->will($this->returnValue([new FieldParameter('key1', 'value1')]))
         ;
     }
 
@@ -441,13 +432,13 @@ class ClientTest extends TestCase
         $requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $requestMock
             ->expects($this->exactly(2))
             ->method('getParameters')
-            ->will($this->returnValue([new Parameter('key1', 'value1')]))
+            ->will($this->returnValue([new FieldParameter('key1', 'value1')]))
         ;
 
         $this->expectException(RequestFailed::class);
@@ -496,13 +487,13 @@ class ClientTest extends TestCase
         $requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $requestMock
             ->expects($this->exactly(2))
             ->method('getParameters')
-            ->will($this->returnValue([new Parameter('key1', 'value1')]))
+            ->will($this->returnValue([new FieldParameter('key1', 'value1')]))
         ;
 
         \Amp\wait($promise = $client->request($requestMock));
@@ -551,13 +542,13 @@ class ClientTest extends TestCase
         $requestMock
             ->expects($this->exactly(2))
             ->method('getEndpoint')
-            ->will($this->returnValue(new Url('/statuses/endpoint')))
+            ->will($this->returnValue(new Url('https://api.twitter.com/1.1', '/statuses/endpoint')))
         ;
 
         $requestMock
             ->expects($this->exactly(2))
             ->method('getParameters')
-            ->will($this->returnValue([new Parameter('key1', 'value1')]))
+            ->will($this->returnValue([new FieldParameter('key1', 'value1')]))
         ;
 
         \Amp\wait($promise = $client->request($requestMock));

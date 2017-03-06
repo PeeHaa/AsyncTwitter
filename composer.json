@@ -22,6 +22,7 @@
     "prefer-stable": true,
     "require": {
         "php": "^7",
+        "amphp/amp": "^1",
         "amphp/artax": "^2",
         "daverandom/exceptional-json": "^1.0"
     },

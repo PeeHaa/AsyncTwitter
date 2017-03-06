@@ -3,7 +3,7 @@
 namespace PeeHaa\AsyncTwitterTest\Request;
 
 use PeeHaa\AsyncTwitter\Request\Body;
-use PeeHaa\AsyncTwitter\Request\Parameter;
+use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PHPUnit\Framework\TestCase;
 
 class BodyTest extends TestCase
@@ -11,9 +11,9 @@ class BodyTest extends TestCase
     public function testGetParametersReturnsAll()
     {
         $parameters = [
-            new Parameter('param1', 'value1'),
-            new Parameter('param2', 'value2'),
-            new Parameter('param3', 'value3'),
+            new FieldParameter('param1', 'value1'),
+            new FieldParameter('param2', 'value2'),
+            new FieldParameter('param3', 'value3'),
         ];
 
         $body = new Body(...$parameters);
@@ -24,9 +24,9 @@ class BodyTest extends TestCase
     public function testGetParametersReturnsInOrder()
     {
         $parameters = [
-            new Parameter('param1', 'value1'),
-            new Parameter('param2', 'value2'),
-            new Parameter('param3', 'value3'),
+            new FieldParameter('param1', 'value1'),
+            new FieldParameter('param2', 'value2'),
+            new FieldParameter('param3', 'value3'),
         ];
 
         $body = new Body(...$parameters);

@@ -2,11 +2,13 @@
 
 namespace PeeHaa\AsyncTwitter\Api\Request;
 
-use PeeHaa\AsyncTwitter\Request\Parameter;
+use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PeeHaa\AsyncTwitter\Request\Url;
 
 abstract class BaseRequest implements Request
 {
+    const BASE_URL = 'https://api.twitter.com/1.1';
+
     private $method;
 
     private $endpoint;
@@ -29,7 +31,7 @@ abstract class BaseRequest implements Request
         $parameters = [];
 
         foreach ($this->parameters as $key => $value) {
-            $parameters[] = new Parameter($key, $value);
+            $parameters[] = new FieldParameter($key, $value);
         }
 
         return $parameters;
@@ -37,6 +39,11 @@ abstract class BaseRequest implements Request
 
     public function getEndpoint(): Url
     {
-        return new Url($this->endpoint);
+        return new Url(static::BASE_URL, $this->endpoint);
+    }
+
+    public function handleResponse(array $responseData)
+    {
+        return $responseData;
     }
 }

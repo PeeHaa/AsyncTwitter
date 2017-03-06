@@ -57,4 +57,11 @@ class Update extends BaseRequest
 
         return $this;
     }
+
+    public function setMediaIds(string ...$ids): Update
+    {
+        $this->parameters['media_ids'] = implode(',', $ids);
+
+        return $this;
+    }
 }
