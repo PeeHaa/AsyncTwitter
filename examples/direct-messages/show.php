@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Examples;
+namespace PeeHaa\AsyncTwitter\Examples\DirectMessage;
 
 use PeeHaa\AsyncTwitter\Api\Request\DirectMessage\Show;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-$apiClient = require __DIR__ . '/create-client.php';
+$apiClient = require __DIR__ . '/../create-client.php';
 
 $request = new Show(587424932);
 
