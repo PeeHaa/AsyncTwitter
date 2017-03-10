@@ -5,6 +5,7 @@ language: php
 php:
   - '7.0'
   - '7.1'
+  - nightly
 
 before_script:
   - if [[ $TRAVIS_PHP_VERSION != 7.1 ]]; then phpenv config-rm xdebug.ini; fi
