@@ -2,6 +2,9 @@
 
 namespace PeeHaa\AsyncTwitter\Api\Request\Stream;
 
+/**
+ * @link https://dev.twitter.com/streaming/reference/post/statuses/filter
+ */
 class Filter extends BaseRequest
 {
     const METHOD   = 'POST';

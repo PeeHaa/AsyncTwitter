@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Lists;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/lists/list
+ */
 abstract class Lists extends BaseRequest
 {
     const METHOD   = 'GET';

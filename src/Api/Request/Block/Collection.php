@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Block;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/blocks/list
+ */
 class Collection extends BaseRequest
 {
     const METHOD   = 'GET';

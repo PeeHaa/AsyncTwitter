@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Help;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/help/configuration
+ */
 class Configuration extends BaseRequest
 {
     const METHOD   = 'GET';
