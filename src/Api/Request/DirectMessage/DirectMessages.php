@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\DirectMessage;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/direct_messages
+ */
 class DirectMessages extends BaseRequest
 {
     const METHOD   = 'GET';

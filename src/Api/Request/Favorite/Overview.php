@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Favorite;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/favorites/list
+ */
 class Overview extends BaseRequest
 {
     const METHOD   = 'GET';

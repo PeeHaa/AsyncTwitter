@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Examples;
+namespace PeeHaa\AsyncTwitter\Examples\Status;
 
 use PeeHaa\AsyncTwitter\Api\Request\Status\HomeTimeline;
 

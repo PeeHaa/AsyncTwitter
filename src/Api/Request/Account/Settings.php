@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Account;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/account/settings
+ */
 class Settings extends BaseRequest
 {
     const METHOD   = 'GET';
