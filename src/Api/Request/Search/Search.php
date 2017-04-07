@@ -9,8 +9,8 @@ use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
  */
 class Search extends BaseRequest
 {
-    const METHOD         = 'GET';
-    const ENDPOINT       = '/search/tweets.json';
+    const METHOD   = 'GET';
+    const ENDPOINT = '/search/tweets.json';
 
     private $resultTypes = ['mixed', 'recent', 'popular'];
 

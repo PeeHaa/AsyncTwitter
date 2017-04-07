@@ -1,16 +1,16 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Examples;
+namespace PeeHaa\AsyncTwitter\Examples\Search;
 
 use PeeHaa\AsyncTwitter\Api\Request\Search\Search;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-$apiClient = require __DIR__ . '/create-client.php';
+$apiClient = require __DIR__ . '/../create-client.php';
 
 $request = (new Search('php'))
     ->geocode('37.781157', '-122.398720', '1mi')
-    ->languages('en')
+    ->language('en')
     ->locale()
     ->resultType('recent')
     ->amount(13)

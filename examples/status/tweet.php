@@ -1,12 +1,12 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Examples;
+namespace PeeHaa\AsyncTwitter\Examples\Status;
 
 use PeeHaa\AsyncTwitter\Api\Request\Status\Update;
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
-$apiClient = require __DIR__ . '/create-client.php';
+$apiClient = require __DIR__ . '/../create-client.php';
 
 $request = (new Update('@Ocramius I never liked that room anyway'))
     ->replyTo(779461458715406336)
