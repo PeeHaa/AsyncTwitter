@@ -51,8 +51,7 @@ class SearchTest extends TestCase
     }
 
     public function testSetLocaleSetsCorrectly()
-    {
-        
+    {        
     	$this->request->setLocale();
         
     	$this->assertSame('locale', $this->request->getParameters()[1]->getKey());
@@ -65,8 +64,7 @@ class SearchTest extends TestCase
     }
 
     public function testSetResultTypeSetsCorrectly()
-    {
-        
+    {        
     	$this->request->setResultType('mixed');
         
     	$this->assertSame('result_type', $this->request->getParameters()[1]->getKey());

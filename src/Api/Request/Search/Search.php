@@ -9,8 +9,8 @@ use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
  */
 class Search extends BaseRequest
 {
-    const METHOD = 'GET';
-    const ENDPOINT = '/search/tweets.json';
+    const METHOD         = 'GET';
+    const ENDPOINT       = '/search/tweets.json';
 
     private $resultTypes = ['mixed', 'recent', 'popular'];
 
@@ -24,7 +24,7 @@ class Search extends BaseRequest
     //use string instead of float
     public function setGeocode(string $latitude, string $longitude, string $radius): Search
     {
-        $this->parameters['geocode'] = sprintf("%s %s %s", $latitude, $longitude, $radius);
+        $this->parameters['geocode'] = sprintf('%s %s %s', $latitude, $longitude, $radius);
 
         return $this;
     }
