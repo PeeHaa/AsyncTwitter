@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Friendship;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/friendships/outgoing
+ */
 class Outgoing extends BaseRequest
 {
     const METHOD   = 'GET';

@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Follower;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/followers/list
+ */
 class Overview extends BaseRequest
 {
     const METHOD   = 'GET';

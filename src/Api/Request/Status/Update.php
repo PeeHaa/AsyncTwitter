@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Status;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/post/statuses/update
+ */
 class Update extends BaseRequest
 {
     const METHOD   = 'POST';

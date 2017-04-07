@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Geo;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/geo/id/place_id
+ */
 class Id extends BaseRequest
 {
     const METHOD   = 'GET';
