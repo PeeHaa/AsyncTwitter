@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Status;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/statuses/retweets_of_me
+ */
 class RetweetsOfMe extends BaseRequest
 {
     const METHOD   = 'GET';
