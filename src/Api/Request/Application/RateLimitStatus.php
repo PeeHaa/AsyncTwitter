@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Application;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/application/rate_limit_status
+ */
 class RateLimitStatus extends BaseRequest
 {
     const METHOD   = 'GET';

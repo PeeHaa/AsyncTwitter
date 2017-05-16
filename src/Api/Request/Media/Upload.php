@@ -7,6 +7,9 @@ use PeeHaa\AsyncTwitter\Exception;
 use PeeHaa\AsyncTwitter\Request\FieldParameter;
 use PeeHaa\AsyncTwitter\Request\FileParameter;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/post/media/upload-append
+ */
 class Upload extends BaseRequest
 {
     const METHOD   = 'POST';

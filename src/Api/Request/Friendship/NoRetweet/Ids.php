@@ -4,6 +4,9 @@ namespace PeeHaa\AsyncTwitter\Api\Request\Friendship\NoRetweet;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 
+/**
+ * @link https://dev.twitter.com/rest/reference/get/friendships/no_retweets/ids
+ */
 class Ids extends BaseRequest
 {
     const METHOD   = 'GET';
