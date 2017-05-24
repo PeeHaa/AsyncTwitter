@@ -21,7 +21,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7",
+        "php-64bit": "^7",
         "amphp/amp": "^1",
         "amphp/artax": "^2",
         "daverandom/exceptional-json": "^1.0"
