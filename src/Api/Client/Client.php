@@ -134,9 +134,15 @@ class Client
 
     private function handleResponse(Request $request, Promise $responsePromise)
     {
+        // @todo for v2 we need to make this less stupid by properly handling responses
+        //       instead of this band-aid solution. and just this is bad and I feel bad.
+        //       *dealwithit.gif*
+        if ($request->getEndpoint() === '/account/remove_profile_banner.json') {
+            return null;
+        }
+
         /** @var HttpResponse $response */
         $response = yield $responsePromise;
-
         try {
             $decoded = json_try_decode($response->getBody(), true);
         } catch (JSONDecodeErrorException $e) {
