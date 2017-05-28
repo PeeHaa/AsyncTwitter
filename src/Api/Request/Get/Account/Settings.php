@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitter\Api\Request\Account;
+namespace PeeHaa\AsyncTwitter\Api\Request\Get\Account;
 
 use PeeHaa\AsyncTwitter\Api\Request\BaseRequest;
 

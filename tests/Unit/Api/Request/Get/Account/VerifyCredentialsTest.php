@@ -1,12 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace PeeHaa\AsyncTwitterTest\Api\Request\Account;
+namespace PeeHaa\AsyncTwitterTest\Api\Request\Get\Account;
 
-use PeeHaa\AsyncTwitter\Api\Request\Account\VerifyCredentials;
+use PeeHaa\AsyncTwitter\Api\Request\Get\Account\VerifyCredentials;
 use PHPUnit\Framework\TestCase;
 
 class VerifyCredentialsTest extends TestCase
 {
+    /** @var VerifyCredentials */
     private $request;
 
     public function setUp()
