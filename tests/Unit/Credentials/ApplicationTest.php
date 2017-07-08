@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class ApplicationTest extends TestCase
 {
+    /** @var Application */
     private $application;
 
     public function setUp()
