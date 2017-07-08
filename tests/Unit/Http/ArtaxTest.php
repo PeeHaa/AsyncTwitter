@@ -61,10 +61,10 @@ class ArtaxTest extends TestCase
             ->expects($this->once())
             ->method('request')
             ->with($this->isInstanceOf(Request::class))
-            ->will($this->returnCallback(function($request) {
+            ->will($this->returnCallback(function(Request $request) {
                 $this->assertSame('POST', $request->getMethod());
                 $this->assertSame('https://api.twitter.com/1.1/statuses/endpoint', $request->getUri());
-                $this->assertArrayHasKey('Authorization', $request->getAllHeaders());
+                $this->assertArrayHasKey('authorization', $request->getAllHeaders());
 
                 return new Success();
             }))
@@ -81,7 +81,7 @@ class ArtaxTest extends TestCase
             ->expects($this->once())
             ->method('request')
             // todo: test that the timeout value is negative, can't find a sane way to do this at the moment
-            ->with($this->isInstanceOf(Request::class), $this->arrayHasKey(Client::OP_MS_TRANSFER_TIMEOUT))
+            ->with($this->isInstanceOf(Request::class), $this->arrayHasKey(Client::OP_TRANSFER_TIMEOUT))
             ->will($this->returnValue(new Success))
         ;
 
@@ -102,7 +102,7 @@ class ArtaxTest extends TestCase
                     'https://api.twitter.com/1.1/statuses/endpoint?param1=value1&param2=value2&param3=value3',
                     $request->getUri()
                 );
-                $this->assertArrayHasKey('Authorization', $request->getAllHeaders());
+                $this->assertArrayHasKey('authorization', $request->getAllHeaders());
 
                 return new Success();
             }))
@@ -117,7 +117,7 @@ class ArtaxTest extends TestCase
             ->expects($this->once())
             ->method('request')
             // todo: test that the timeout value is negative, can't find a sane way to do this at the moment
-            ->with($this->isInstanceOf(Request::class), $this->arrayHasKey(Client::OP_MS_TRANSFER_TIMEOUT))
+            ->with($this->isInstanceOf(Request::class), $this->arrayHasKey(Client::OP_TRANSFER_TIMEOUT))
             ->will($this->returnValue(new Success))
         ;
 

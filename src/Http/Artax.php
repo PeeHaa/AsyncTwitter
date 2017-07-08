@@ -27,16 +27,15 @@ class Artax implements Client
     {
         $body = $this->getFormBody($body);
 
-        $request = (new Request)
-            ->setMethod('POST')
-            ->setUri($url->getUrl())
-            ->setHeader('Authorization', $header->getHeader())
-            ->setBody($body)
+        $request = (new Request($url->getUrl()))
+            ->withMethod('POST')
+            ->withHeader('Authorization', $header->getHeader())
+            ->withBody($body)
         ;
 
         $options = [];
         if ($flags & Client::OP_STREAM) {
-            $options[ArtaxClient::OP_MS_TRANSFER_TIMEOUT] = -1;
+            $options[ArtaxClient::OP_TRANSFER_TIMEOUT] = -1;
         }
 
         return $this->client->request($request, $options);
@@ -61,15 +60,14 @@ class Artax implements Client
 
     public function get(Url $url, Header $header, array $parameters, int $flags = 0): Promise
     {
-        $request = (new Request)
-            ->setMethod('GET')
-            ->setUri($url->getUrl() . $this->buildQueryString(...$parameters))
-            ->setAllHeaders(['Authorization' => $header->getHeader()])
+        $request = (new Request($url->getUrl() . $this->buildQueryString(...$parameters)))
+            ->withMethod('GET')
+            ->withAllHeaders(['Authorization' => $header->getHeader()])
         ;
 
         $options = [];
         if ($flags & Client::OP_STREAM) {
-            $options[ArtaxClient::OP_MS_TRANSFER_TIMEOUT] = -1;
+            $options[ArtaxClient::OP_TRANSFER_TIMEOUT] = -1;
         }
 
         return $this->client->request($request, $options);
