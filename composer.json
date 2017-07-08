@@ -21,13 +21,13 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php-64bit": "^7",
-        "amphp/amp": "^1",
-        "amphp/artax": "^2",
+        "php": "~7.1",
+        "amphp/amp": "^2",
+        "amphp/artax": "master",
         "daverandom/exceptional-json": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5"
+        "phpunit/phpunit": "^6"
     },
     "autoload": {
         "psr-4": {
