@@ -61,7 +61,7 @@ class ArtaxTest extends TestCase
             ->expects($this->once())
             ->method('request')
             ->with($this->isInstanceOf(Request::class))
-            ->will($this->returnCallback(function(Request $request) {
+            ->will($this->returnCallback(function (Request $request) {
                 $this->assertSame('POST', $request->getMethod());
                 $this->assertSame('https://api.twitter.com/1.1/statuses/endpoint', $request->getUri());
                 $this->assertArrayHasKey('authorization', $request->getAllHeaders());
@@ -96,7 +96,7 @@ class ArtaxTest extends TestCase
             ->expects($this->once())
             ->method('request')
             ->with($this->isInstanceOf(Request::class))
-            ->will($this->returnCallback(function($request) {
+            ->will($this->returnCallback(function ($request) {
                 $this->assertSame('GET', $request->getMethod());
                 $this->assertSame(
                     'https://api.twitter.com/1.1/statuses/endpoint?param1=value1&param2=value2&param3=value3',

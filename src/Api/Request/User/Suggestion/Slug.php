@@ -17,7 +17,7 @@ class Slug extends BaseRequest
         parent::__construct(self::METHOD, sprintf(self::ENDPOINT, $slug));
     }
 
-    public function lang(string $lang): Slug
+    public function language(string $lang): Slug
     {
         $this->parameters['lang'] = $lang;
 

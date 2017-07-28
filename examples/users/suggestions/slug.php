@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../../vendor/autoload.php';
 $apiClient = require __DIR__ . '/../../create-client.php';
 
 $request = (new Slug('twitter'))
-    ->lang('en')
+    ->language('en')
 ;
 
 \Amp\wait($result = $apiClient->request($request));
