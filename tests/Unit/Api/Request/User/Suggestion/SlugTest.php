@@ -22,14 +22,14 @@ class SlugTest extends TestCase
         );
     }
 
-    public function testLangReturnsSelf()
+    public function testLanguageReturnsSelf()
     {
-        $this->assertSame($this->request, $this->request->lang('nl'));
+        $this->assertSame($this->request, $this->request->language('nl'));
     }
 
-    public function testLangSetsCorrectly()
+    public function testLanguageSetsCorrectly()
     {
-        $this->request->lang('nl');
+        $this->request->language('nl');
 
         $this->assertSame('lang', $this->request->getParameters()[0]->getKey());
         $this->assertSame('nl', $this->request->getParameters()[0]->getValue());

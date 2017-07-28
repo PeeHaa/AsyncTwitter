@@ -17,7 +17,7 @@ class Suggestion extends BaseRequest
         parent::__construct(self::METHOD, self::ENDPOINT);
     }
 
-    public function lang(string $lang): Suggestion
+    public function language(string $lang): Suggestion
     {
         $this->parameters['lang'] = $lang;
 
